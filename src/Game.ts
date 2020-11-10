@@ -22,7 +22,19 @@ class Game {
     private word: TextString;
 
     // The hangman parts
+    //horizontalPole, verticalString, 
+    //head, left arm, right arm, left leg, right leg
+    
     private base: Rectangle;
+    private verticalPole: Line;
+    private horizontalPole: Line;
+    private verticalString: Line;
+    private head: Ellipse;
+    private body: Line;
+    private leftArm: Line;
+    private rightArm: Line;
+    private leftLeg: Line;
+    private rightLeg: Line;
     // TODO declare the other parts of the hangman
 
     /**
@@ -49,9 +61,17 @@ class Game {
         // The base of the hangman
         this.base = new Rectangle(cx - 300, cy * 1.75, 600, 50);
         this.base.fillStyle = "brown";
-        // TODO create the other parts of the hangman
-
-        // Draw the canvas
+        // The vertical pole
+        this.verticalPole = new Line(1100, cy * 1.75, 1100, cy * 1);
+        this.horizontalPole = new Line(800, cy * 1, 1100, cy * 1);
+        this.verticalString = new Line(850, cy * 1, 850, cy * 1.2);
+        this.head = new Ellipse(850, cy * 1.2, 70, cy * 1.2);
+        this.body = new Line(850, cy * 1.2, 850, cy * 1.5);
+        this.leftLeg = new Line(850, cy * 1.5, 900, cy * 1.7);
+        this.rightLeg = new Line(850, cy * 1.5, 800, cy * 1.7);
+        this.leftArm = new Line(850, cy * 1.3, 900, cy * 1.4);
+        this.rightArm = new Line(850, cy * 1.3, 800, cy * 1.4);
+        // Draw the canvasbase, verticalPole, horizontalPole, verticalString, head, left arm, right arm, left leg, right leg
         this.drawCanvas();
 
         // Attach an eventlistener to the keyUp event
@@ -68,6 +88,15 @@ class Game {
         this.word.drawText(this.ctx);
         // Draw the hangman
         this.base.drawRectangle(this.ctx);
+        this.verticalPole.drawLine(this.ctx);
+        this.horizontalPole.drawLine(this.ctx);
+        this.verticalString.drawLine(this.ctx);
+        this.head.drawCircle(this.ctx);
+        this.body.drawLine(this.ctx);
+        this.leftLeg.drawLine(this.ctx);
+        this.rightLeg.drawLine(this.ctx);
+        this.leftArm.drawLine(this.ctx);
+        this.rightArm.drawLine(this.ctx);
         // TODO draw the other parts of the hangman
     }
 

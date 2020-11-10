@@ -39,7 +39,7 @@ class Line {
      * 
      * @see [CanvasRenderingContext2D.lineWidth](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/lineWidth)
      */
-    public lineWidth: number = 1;
+    public lineWidth: number = 4;
 
 
     /**
