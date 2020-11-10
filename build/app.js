@@ -31,9 +31,53 @@ class Ellipse {
 }
 class Game {
     constructor(canvasId) {
+        this.guessedLetter = [];
+        this.attempts = 6;
         this.keyPress = (ev) => {
             console.log(`Key ${ev.key} has been pressed`);
+            const lettersInWord = this.chosenWord.split("");
+            console.log(lettersInWord);
+            const test = [];
+            lettersInWord.forEach((element, index) => {
+                if (element === ev.key) {
+                    console.log('match');
+                    const temp = [];
+                    temp.push(index);
+                    temp.push(element);
+                    test.push(temp);
+                }
+                console.log(this.chosenWord);
+            });
+            if (test.length > 0) {
+                test.forEach((element) => {
+                    const index = parseInt(element[0]);
+                    const letter = element[1];
+                    this.guessedLetter[index] = letter;
+                });
+            }
+            else {
+                this.attempts--;
+                console.log(this.attempts);
+            }
+            console.log(this.guessedLetter);
+            this.word.text = this.guessedLetter.join(' ');
+            this.drawCanvas();
         };
+        this.words = ['cakes',
+            'annoy',
+            'nutty',
+            'worry',
+            'absurd',
+            'frightened',
+            'robin',
+            'protect',
+            'eight',
+            'office',
+            'collar',
+            'pink'];
+        this.chosenWord = this.randomWord();
+        const dashes = this.chosenWord.split("").map(e => "_").join(" ");
+        this.guessedLetter = dashes.split("").filter(e => e !== " ");
         this.canvas = canvasId;
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
@@ -64,12 +108,33 @@ class Game {
         this.verticalPole.drawLine(this.ctx);
         this.horizontalPole.drawLine(this.ctx);
         this.verticalString.drawLine(this.ctx);
-        this.head.drawCircle(this.ctx);
-        this.body.drawLine(this.ctx);
-        this.leftLeg.drawLine(this.ctx);
-        this.rightLeg.drawLine(this.ctx);
-        this.leftArm.drawLine(this.ctx);
-        this.rightArm.drawLine(this.ctx);
+        if (this.attempts <= 5) {
+            this.head.drawCircle(this.ctx);
+        }
+        if (this.attempts <= 4) {
+            this.body.drawLine(this.ctx);
+        }
+        if (this.attempts <= 3) {
+            this.leftLeg.drawLine(this.ctx);
+        }
+        if (this.attempts <= 2) {
+            this.rightLeg.drawLine(this.ctx);
+        }
+        if (this.attempts <= 1) {
+            this.leftArm.drawLine(this.ctx);
+        }
+        if (this.attempts <= 0) {
+            this.rightArm.drawLine(this.ctx);
+        }
+        if (this.attempts <= -1) {
+            prompt('game over');
+            location.reload();
+        }
+    }
+    randomWord() {
+        const randomIndex = Math.floor(Math.random() * this.words.length);
+        const randomWord = this.words[randomIndex];
+        return randomWord;
     }
 }
 let game = null;
